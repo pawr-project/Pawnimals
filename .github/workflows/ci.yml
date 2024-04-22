@@ -12,7 +12,7 @@ jobs:
       image: appditto/libvips:latest
     steps:
     - name: Check out code
-      uses: actions/checkout@main
+      uses: actions/checkout@master
 
     - name: Run Tests
       run: |
@@ -26,9 +26,9 @@ jobs:
     env:
       GITHUB_RUN_ID: ${{ github.run_id }}
     steps:
-      - uses: actions/checkout@main
+      - uses: actions/checkout@master
       - name: Login to registry
-        uses: actions-hub/docker/login@main
+        uses: actions-hub/docker/login@master
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USER }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -49,6 +49,6 @@ jobs:
 
       - name: Push image
         if: success()
-        uses: actions-hub/docker@main
+        uses: actions-hub/docker@master
         with:
           args: push pawr/pawnimals-server:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }}
