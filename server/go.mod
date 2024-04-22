@@ -1,10 +1,10 @@
-module github.com/appditto/natricon/server
+module github.com/pawr-project/Pawnimals/server
 
 go 1.19
 
 require (
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
-	github.com/bbedward/nano v0.0.0-20200816190148-07c73bdcaff6
+  github.com/paw-digital/nano v0.0.0-20211111065128-af0e9f7f22dc
 	github.com/bsm/redislock v0.8.0
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-redis/redis/v9 v9.0.0-beta.2
@@ -17,7 +17,7 @@ require (
 )
 
 require (
-	github.com/bbedward/crypto/ed25519 v0.0.0-20220804193241-34e811d3dfe5 // indirect
+  github.com/paw-digital/crypto/ed25519 v0.0.0-20211111060414-7ca7a22e134b // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect

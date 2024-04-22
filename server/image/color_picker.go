@@ -4,8 +4,8 @@ import (
 	"math"
 	"strconv"
 
-	"github.com/appditto/natricon/server/color"
-	"github.com/appditto/natricon/server/rand"
+	"github.com/pawr-project/Pawnimals/server/color"
+	"github.com/pawr-project/Pawnimals/server/rand"
 )
 
 // Min and max perceivedBrightness values (between 0 and 100)
@@ -26,7 +26,7 @@ const MinTotalSaturation = 60.0
 const MinTotalBrightness = 130.0
 
 // Min hair brightness
-const MinHairBrightness = 40.0
+const MinHairBrightness = 60.0 // 40.0 before
 
 // Min and max shadow opacity
 const MinShadowOpacity = 0.075
@@ -108,8 +108,10 @@ func GetHairColor(bodyColor color.RGB, hEntropy string, sEntropy string, bEntrop
 		return color.RGB{}, err
 	}
 
-	// Generate random shift between <minDistance>...270
+	H := bodyColorHSB.H;
 	r := rand.Init()
+	/*
+	// Generate random shift between <minDistance>...270
 	r.Seed(uint32(randSeed))
 	lowerBound := bodyColorHSB.H - 180 - BodyAndHairHueDistance
 	upperBound := bodyColorHSB.H - 180 + BodyAndHairHueDistance
@@ -119,7 +121,7 @@ func GetHairColor(bodyColor color.RGB, hEntropy string, sEntropy string, bEntrop
 	if H < 0 {
 		H += 360
 	}
-
+	*/
 	// Generate saturation
 	randSeed, err = strconv.ParseInt(sEntropy, 16, 64)
 	if err != nil {

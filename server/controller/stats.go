@@ -5,10 +5,10 @@ import (
 	"os"
 	"path"
 
-	"github.com/appditto/natricon/server/db"
-	"github.com/appditto/natricon/server/image"
-	"github.com/appditto/natricon/server/spc"
-	"github.com/appditto/natricon/server/utils"
+	"github.com/pawr-project/Pawnimals/server/db"
+	"github.com/pawr-project/Pawnimals/server/image"
+	"github.com/pawr-project/Pawnimals/server/spc"
+	"github.com/pawr-project/Pawnimals/server/utils"
 	"github.com/gin-gonic/gin"
 )
 

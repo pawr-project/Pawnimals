@@ -1,7 +1,7 @@
 package spc
 
 import (
-	"github.com/appditto/natricon/server/color"
+	"github.com/pawr-project/Pawnimals/server/color"
 )
 
 // Badge types
@@ -23,7 +23,7 @@ type Vanity struct {
 	// If using any of the below then ALL of them are required
 	BodyColor    *color.RGB
 	HairColor    *color.RGB
-	BodyAssetID  int
+	FaceAssetID  int
 	HairAssetID  int
 	MouthAssetID int
 	EyeAssetID   int

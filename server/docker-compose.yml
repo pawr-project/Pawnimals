@@ -1,0 +1,23 @@
+services:
+  pawnimals_server:
+    image: pawnimals
+    restart: unless-stopped
+    command: natricon -host=0.0.0.0 -port=${PAWNIMALS_PORT}  -logtostderr
+    ports:
+      - "127.0.0.1:5555:${PORT}"
+    environment:
+      - PORT=${PAWNIMALS_PORT}
+      - NATRICON_SEED=${NATRICON_SEED}
+      - REDIS_HOST=${PAWNIMALS_REDIS_HOST:-127.0.0.1}
+      - REDIS_PORT=${PAWNIMALS_REDIS_PORT:-6379}
+      - REDIS_DB=${PAWNIMALS_REDIS_DB:-0}
+    networks:
+      - paw
+  db:
+    image: redis
+    networks:
+      - paw
+
+networks:
+  paw:
+    external: true

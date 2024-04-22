@@ -7,11 +7,11 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/appditto/natricon/server/controller"
-	"github.com/appditto/natricon/server/image"
-	"github.com/appditto/natricon/server/net"
-	"github.com/appditto/natricon/server/spc"
-	"github.com/appditto/natricon/server/utils"
+	"github.com/pawr-project/Pawnimals/server/controller"
+	"github.com/pawr-project/Pawnimals/server/image"
+	"github.com/pawr-project/Pawnimals/server/net"
+	"github.com/pawr-project/Pawnimals/server/spc"
+	"github.com/pawr-project/Pawnimals/server/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
 	socketio "github.com/googollee/go-socket.io"
@@ -57,7 +57,7 @@ func RandFiles(count int, seed string) {
 
 func main() {
 	// Get seed from env
-	seed := utils.GetEnv("NATRICON_SEED", "1234567890")
+	seed := utils.GetEnv("NATRICON_SEED", "0123456789")
 	// Parse server options
 	loadFiles := flag.Bool("load-files", false, "Print assets as GO arrays")
 	testBodyDist := flag.Bool("test-bd", false, "Test body distribution")
@@ -152,7 +152,7 @@ func main() {
 	if !gin.IsDebugging() {
 		go func() {
 			// Checking missed donations
-			gocron.Every(10).Minutes().Do(nanoController.CheckMissedCallbacks)
+			gocron.Every(30).Minutes().Do(nanoController.CheckMissedCallbacks)
 			// Updating principal rep requirement
 			gocron.Every(30).Minutes().Do(nanoController.UpdatePrincipalWeight)
 			// Update principal reps, this is heavier so dont do it so often
@@ -164,7 +164,18 @@ func main() {
 	// Start Nano WS client
 	donationAccount := utils.GetEnv("DONATION_ACCOUNT", "")
 	if *wsUrl != "" && utils.ValidateAddress(donationAccount) {
+		fmt.Printf("\r\nDonation account: %s\r\n", donationAccount)
 		go net.StartNanoWSClient(*wsUrl, donationAccount, nanoController.Callback)
+	} else {
+		fmt.Printf("No donation account specified!\r\n")
+	}
+
+	// Show wallet
+	wallet := utils.GetEnv("WALLET_ID", "")
+	if wallet != "" {
+		fmt.Printf("Wallet account specified: %s\r\n", wallet)
+	} else {
+		fmt.Printf("No wallet specified!\r\n")
 	}
 
 	// Start stats worker

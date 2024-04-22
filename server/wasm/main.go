@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"syscall/js"
 
-	"github.com/appditto/natricon/server/color"
-	"github.com/appditto/natricon/server/image"
-	"github.com/appditto/natricon/server/utils"
+	"github.com/pawr-project/Pawnimals/server/color"
+	"github.com/pawr-project/Pawnimals/server/image"
+	"github.com/pawr-project/Pawnimals/server/utils"
 )
 
 var seed string = "123456789"

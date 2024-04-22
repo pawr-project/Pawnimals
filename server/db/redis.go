@@ -9,8 +9,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/appditto/natricon/server/spc"
-	"github.com/appditto/natricon/server/utils"
+	"github.com/pawr-project/Pawnimals/server/spc"
+	"github.com/pawr-project/Pawnimals/server/utils"
 	"github.com/bsm/redislock"
 	"github.com/go-redis/redis/v9"
 	"github.com/golang/glog"
@@ -19,7 +19,7 @@ import (
 var CTX = context.Background()
 
 // Prefix for all keys
-const keyPrefix = "natricon"
+const keyPrefix = "pawnimal"
 
 // Singleton to keep assets loaded in memory
 type redisManager struct {
@@ -233,18 +233,22 @@ func (r *redisManager) UpdateStatsAddress(address string) {
 	if err != nil {
 		glog.Errorf("Error updating StatesAddresses %s", err)
 	}
+
+	// stats_total
 	key = fmt.Sprintf("%s:stats_total", keyPrefix)
-	val, err := r.get(key)
+	totalCount := 1
+	existingTotal, err := r.get(key)
+	if err == nil {
+		existingTotalInt, err := strconv.Atoi(existingTotal)
+		if err == nil {
+			totalCount = existingTotalInt + 1
+		}
+	}
+
+	err = r.set(key, strconv.Itoa(totalCount))
 	if err != nil {
 		glog.Errorf("Error updating StatesAddresses %s", err)
-		return
 	}
-	valInt, err := strconv.Atoi(val)
-	if err != nil {
-		glog.Errorf("Error updating StatesAddresses %s", err)
-	}
-	valInt += 1
-	r.set(key, strconv.Itoa(valInt))
 }
 
 // UpdateStatsDate - Update stats for current date
@@ -484,7 +488,7 @@ func (r *redisManager) GetNonce(pubkey string) int {
 }
 
 func (r *redisManager) IncreaseNonce(pubkey string) int {
-	lock, err := r.Locker.Obtain(CTX, fmt.Sprintf("natricon:noncelock:%s", pubkey), 100*time.Second, &redislock.Options{
+	lock, err := r.Locker.Obtain(CTX, fmt.Sprintf("pawnimal:noncelock:%s", pubkey), 100*time.Second, &redislock.Options{
 		RetryStrategy: redislock.LimitRetry(
 			redislock.LinearBackoff(
 				1*time.Second,
@@ -506,7 +510,7 @@ func (r *redisManager) IncreaseNonce(pubkey string) int {
 }
 
 func (r *redisManager) SetNonce(pubkey string, nonce int) int {
-	lock, err := r.Locker.Obtain(CTX, fmt.Sprintf("natricon:noncelock:%s", pubkey), 100*time.Second, &redislock.Options{
+	lock, err := r.Locker.Obtain(CTX, fmt.Sprintf("pawnimal:noncelock:%s", pubkey), 100*time.Second, &redislock.Options{
 		RetryStrategy: redislock.LimitRetry(
 			redislock.LinearBackoff(
 				1*time.Second,

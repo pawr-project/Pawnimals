@@ -3,8 +3,8 @@ package image
 import (
 	"sync"
 
-	"github.com/appditto/natricon/server/db"
-	"github.com/appditto/natricon/server/spc"
+	"github.com/pawr-project/Pawnimals/server/db"
+	"github.com/pawr-project/Pawnimals/server/spc"
 )
 
 // BadgeService is a singleton providing badge/address data

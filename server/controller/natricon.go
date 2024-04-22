@@ -6,11 +6,11 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/appditto/natricon/server/color"
-	"github.com/appditto/natricon/server/db"
-	"github.com/appditto/natricon/server/image"
-	"github.com/appditto/natricon/server/spc"
-	"github.com/appditto/natricon/server/utils"
+	"github.com/pawr-project/Pawnimals/server/color"
+	"github.com/pawr-project/Pawnimals/server/db"
+	"github.com/pawr-project/Pawnimals/server/image"
+	"github.com/pawr-project/Pawnimals/server/spc"
+	"github.com/pawr-project/Pawnimals/server/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/h2non/bimg"
 )
@@ -82,7 +82,7 @@ func (nc NatriconController) GetNano(c *gin.Context) {
 		if badgeType == "" {
 			badgeType = spc.BTNone
 		}
-		if vanity.BodyAssetID > 0 && vanity.HairAssetID > 0 && vanity.EyeAssetID > 0 && vanity.BodyColor != nil && vanity.HairColor != nil {
+		if vanity.FaceAssetID > 0 && vanity.BodyColor != nil && vanity.HairColor != nil {
 			specialNatricon = true
 		} else if vanity.Hash == "" {
 			sha256 = utils.PKSha256(pubKey, nc.Seed)
@@ -324,7 +324,7 @@ func generateSpecialIcon(vanity *spc.Vanity, badgeType spc.BadgeType, c *gin.Con
 		}
 	}
 
-	accessories := image.GetSpecificNatricon(badgeType, outline, outlineColor, vanity.BodyColor, vanity.HairColor, vanity.BodyAssetID, vanity.HairAssetID, vanity.MouthAssetID, vanity.EyeAssetID)
+	accessories := image.GetSpecificNatricon(badgeType, outline, outlineColor, vanity.BodyColor, vanity.HairColor, vanity.FaceAssetID, vanity.HairAssetID, vanity.MouthAssetID, vanity.EyeAssetID)
 	svg, err := image.CombineSVG(accessories)
 	if err != nil {
 		c.String(http.StatusInternalServerError, "Error occured")

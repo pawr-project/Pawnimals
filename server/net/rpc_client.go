@@ -7,8 +7,8 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/appditto/natricon/server/model"
-	"github.com/appditto/natricon/server/utils"
+	"github.com/pawr-project/Pawnimals/server/model"
+	"github.com/pawr-project/Pawnimals/server/utils"
 	"github.com/golang/glog"
 )
 
